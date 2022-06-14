@@ -16,11 +16,10 @@ namespace Webapp.Controllers
             bodyDataDAL = new BodyDataDAL();
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public IActionResult Index()
         {
-            Task<string> bodyDatas = bodyDataDAL.getBodyDatasAsync();
-            string a = bodyDatas.Result;
-            return View();
+            List<BodyDataViewModel> bodyDatas = bodyDataDAL.getBodyDatas();
+            return View(bodyDatas);
         }
 
         public IActionResult Privacy()

@@ -1,18 +1,45 @@
-﻿namespace Webapp.dal
+﻿using Webapp.Models;
+using MySqlConnector;
+
+namespace Webapp.dal
 {
     public class BodyDataDAL
     {
-        public async Task<String> getBodyDatasAsync()
+        private MySqlConnection connection;
+
+        public BodyDataDAL()
         {
-            using (var client = new HttpClient())
+            connection = new MySqlConnection("server=192.168.44.122;user=marwan;password=marwan;database=challenge");
+        }
+
+        public List<BodyDataViewModel> getBodyDatas()
+        {
+            try
             {
-                var uri = new Uri("https://192.168.44.127:7272/BodyData");
-
-                var response = await client.GetAsync(uri);
-
-                string textResult = await response.Content.ReadAsStringAsync();
-
-                return textResult;
+                connection.Open();
+                MySqlCommand command = new MySqlCommand();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM bodydata";
+                List<BodyDataViewModel> bodyDatas = new List<BodyDataViewModel>();
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        bodyDatas.Add(new BodyDataViewModel() { id = Convert.ToInt32(reader["id"]), heartBeat = Convert.ToInt32(reader["heartBeat"]), heat = Convert.ToDouble(reader["heat"]) });
+                    }
+                }
+                return bodyDatas;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            finally
+            {
+                if (connection != null)
+                {
+                    connection.Close();
+                }
             }
         }
     }
