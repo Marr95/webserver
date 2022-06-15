@@ -25,7 +25,7 @@ namespace Webapp.dal
                 {
                     while (reader.Read())
                     {
-                        bodyDatas.Add(new BodyDataViewModel() { id = Convert.ToInt32(reader["id"]), heartBeat = Convert.ToInt32(reader["heartBeat"]), heat = Convert.ToDouble(reader["heat"]) });
+                        bodyDatas.Add(new BodyDataViewModel() { id = Convert.ToInt32(reader["id"]), temperature = Convert.ToInt32(reader["temperature"]), heat = Convert.ToDouble(reader["heat"]) });
                     }
                 }
                 return bodyDatas;

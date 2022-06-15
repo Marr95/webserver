@@ -3,7 +3,7 @@
     public class BodyDataViewModel
     {
         public int id { get; set; }
-        public int heartBeat { get; set; }
+        public int temperature { get; set; }
         public double heat { get; set; }
     }
 }
